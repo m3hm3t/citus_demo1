@@ -218,7 +218,7 @@ VALUES (100, '2025-01-10', 200.00, 'Bob');
   
   ```
   ERROR:  conflicting key value violates exclusion constraint "orders_jan_2025_excl"
-  DETAIL:  Key (order_date, order_id)=(2025-01-10, 100) conflicts with existing row.
+  DETAIL:  Key (order_date, order_id)=(2025-01-10, 100) conflicts with existing key (order_date, order_id)=(2025-01-10, 100).
   ```
 
 ---
