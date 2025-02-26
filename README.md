@@ -187,12 +187,14 @@ ORDER BY conname;
 Example output:
 
 ```
-         conname
--------------------------
- orders_excl
- orders_jan_2025_excl
- orders_feb_2025_excl
- orders_mar_2025_excl
+┌──────────────────────────────────────────┐
+│                 conname                  │
+├──────────────────────────────────────────┤
+│ orders_excl                              │
+│ orders_feb_2025_order_date_order_id_excl │
+│ orders_jan_2025_order_date_order_id_excl │
+│ orders_mar_2025_order_date_order_id_excl │
+└──────────────────────────────────────────┘
 (4 rows)
 ```
 
