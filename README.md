@@ -112,7 +112,7 @@ Let’s add a partition for March 2025. We’ll create the table first and then 
 ```sql
 CREATE TABLE orders_mar_2025 (
     order_id   bigint NOT NULL,
-    order_date date,
+    order_date date   NOT NULL,
     amount     numeric(10,2),
     customer   text
 );
