@@ -225,7 +225,6 @@ VALUES (100, '2025-01-10', 200.00, 'Bob');
 
 ---
 
-
 # Putting It All Together
 
 1. We created a **partitioned** table (`orders_partitioned`) with a **columnar** access method and an **identity** column.  
@@ -234,3 +233,63 @@ VALUES (100, '2025-01-10', 200.00, 'Bob');
 4. We added an **exclusion constraint** to the parent (and all partitions).  
 5. We **attached** a new partition (`orders_mar_2025`), which automatically inherited the identity column, the exclusion constraint, and the new `heap` access method.  
 6. We **tested** that the constraint indeed prevents inserts with conflicting values.  
+
+# MERGE - WHEN NOT MATCHED BY SOURCE
+
+Citus 13 comes with support for `WHEN NOT MATCHED BY SOURCE`, a new type of merge action added by Postgres 17. This action is taken on rows in the target table - the table being modified by the `MERGE` - that do not have a matching row in the source relation. The target row can be updated or deleted. One way to understand this action is to consider that if the source relation is empty - has zero rows - then every row in the target must undergo the `WHEN NOT MATCHED BY SOURCE` action. Citus 13 supports this action for distributed tables, and we will demonstrate a few scenarios using this example schema:
+
+```
+-- create and distribute the target and source tables
+CREATE TABLE target_table (tid integer, balance float, val text);
+CREATE TABLE source_table (sid integer, delta float);
+SELECT create_distributed_table('target_table', 'tid');
+SELECT create_distributed_table('source_table', 'sid');
+
+-- populate the tables
+INSERT INTO target_table SELECT id, id * 100, 'initial' FROM generate_series(1,5,2) AS id;
+INSERT INTO source_table SELECT id, id * 10 FROM generate_series(1,4) AS id;
+```
+
+## Distributed Table target - Distributed Table source
+
+Run a MERGE command against distributed table `target_table` with a `NOT MATCHED BY SOURCE` action:
+```
+MERGE INTO target_table t
+    USING source_table s
+    ON t.tid = s.sid AND tid = 1
+    WHEN MATCHED THEN
+        UPDATE SET balance = balance + delta, val = val || ' updated by merge'
+    WHEN NOT MATCHED BY TARGET THEN
+        INSERT VALUES (sid, delta, 'inserted by merge')
+    WHEN NOT MATCHED BY SOURCE THEN
+        UPDATE SET val = val || ' not matched by source';
+```
+
+Let's see the distributed target table after having run the `MERGE` command; the rows in the target table that did not have a matching row in the source have been updated by the `NOT MATCHED BY SOURCE` action.
+
+```
+SELECT * FROM target_table ORDER BY tid;
+
+ tid | balance |              val
+-----+---------+-------------------------------
+   1 |     110 | initial updated by merge
+   2 |      20 | inserted by merge
+   3 |      30 | inserted by merge
+   3 |     300 | initial not matched by source
+   4 |      40 | inserted by merge
+   5 |     500 | initial not matched by source
+```
+
+## Distributed Table target - Reference table source
+
+A distributed table can undergo a `MERGE` with a reference table as a source - todo add query example
+
+## Distributed Table target - local table source
+
+A distributed table can undergo a `MERGE` with a local or vanilla Postgres table as a source - todo add query example
+  
+## Distributed Table target - Distributed Query source
+
+A distributed table can undergo a `MERGE` with an arbitrary distributed query as a source - todo add query example
+
+#### todo - add more realistic/compelling examples - see https://www.citusdata.com/blog/2023/07/27/how-citus-12-supports-postgres-merge/
