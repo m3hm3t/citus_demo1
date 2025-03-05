@@ -111,7 +111,7 @@ CREATE TABLE orders_mar_2025 (
 );
 
 ALTER TABLE orders_partitioned
-    ATTACH PARTITION orders_mar_2025 
+    ATTACH PARTITION orders_mar_2025
     FOR VALUES FROM ('2025-03-01') TO ('2025-04-01');
 ```
 
