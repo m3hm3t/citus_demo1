@@ -147,11 +147,18 @@ You should see something like:
 Check each table’s `amname`:
 
 ```sql
-SELECT relname, amname
-FROM pg_class c
-LEFT JOIN pg_am am ON (c.relam = am.oid)
-WHERE relname IN ('orders_partitioned', 'orders_jan_2025', 'orders_feb_2025', 'orders_mar_2025')
-ORDER BY relname;
+SELECT 
+    relname, 
+    amname
+FROM 
+    pg_class c
+LEFT JOIN 
+    pg_am am 
+    ON c.relam = am.oid
+WHERE 
+    relname IN ('orders_partitioned', 'orders_jan_2025', 'orders_feb_2025', 'orders_mar_2025')
+ORDER BY 
+    relname;
 ```
 
 You’ll see that the original parent and newly attached partition use `heap`:
