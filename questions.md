@@ -1,3 +1,6 @@
+Hello everyone, I'm Mehmet Yılmaz. I'm a Senior Software Engineer at Microsoft, currently focused on advancing the Citus project to deliver a robust and scalable database solution.
+
+
 I first got interested in Citus when I saw how it boosts PostgreSQL's reliable, open-source strengths to handle big data challenges. It blends a solid base with a creative twist, perfectly fitting today's fast-moving tech world. I'm really excited to join a team that loves pushing limits and solving real problems while having a great time doing it.
 
 
