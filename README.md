@@ -12,7 +12,7 @@ Let’s create a **partitioned table** named `orders_partitioned` that is partit
 - Use `USING columnar` to specify the **columnar** access method for the table.  
 - Define an **identity column** `order_id` with a custom start and increment.  
 
-> Note: The syntax `PARTITION BY RANGE (order_date) USING columnar` is the Postgres 17 way to specify an access method for partitioned tables. Citus supports propagating this to worker nodes once the table is distributed.
+> Note: Postgres 17 uses "PARTITION BY RANGE" to set an access method for partitioned tables, and Citus propagates it to worker nodes.
 
 ```sql
 CREATE TABLE orders_partitioned
