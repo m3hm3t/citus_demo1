@@ -1,11 +1,5 @@
 # How to use Citus 13’s expanded functionality on distributed partitioned tables:
 
-1. Specifying an **access method** on a partitioned table.  
-2. Creating an **identity column** in the partitioned table.  
-3. Adding an **exclusion constraint**.  
-4. Demonstrating how these changes propagate when you **distribute** and **attach** new partitions.  
-5. Seeing how an insert might fail because of the new exclusion constraint.  
-
 In this demo, we’ll create a table for “orders,” partitioned by a date column, then distribute it, attach more partitions, and see these new features in action.
 
 ---
