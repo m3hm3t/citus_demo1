@@ -1,1 +1,5 @@
-What got me hooked on Citus was seeing how it takes the rock-solid, open-source charm of PostgreSQL and amps it up for big, bold data challenges. It's like getting the best of both worlds—a dependable foundation mixed with a creative, innovative twist that just makes sense for today's fast-paced tech world. I'm super excited to be here, working with a team that's all about pushing boundaries and having fun while solving real-world problems.
+I first got interested in Citus when I saw how it boosts PostgreSQL's reliable, open-source strengths to handle big data challenges. It blends a solid base with a creative twist, perfectly fitting today's fast-moving tech world. I'm really excited to join a team that loves pushing limits and solving real problems while having a great time doing it.
+
+
+
+I find PostgreSQL fascinating because it's reliable and very flexible. It's open source, so a supportive community is always working to make it better. I love that it works well for both small projects and large applications. This mix of dependability and adaptability really stands out to me.
